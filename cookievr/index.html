@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookieVR´s Seite</title>
+    <link rel="icon" href="https://cdn.gaminghund.de/cookievr.ico">
+    <!-- Font Awesome CDN für die Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url('cookievr.png');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #333;
+            margin-bottom: 20px;
+            background-image: url('https://cdn.gaminghund.de/cookievr.png');
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .link:hover {
+            transform: scale(1.05);
+        }
+
+        .link i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        /* Spezielle Farben für die Plattformen */
+        .link-tiktok i { color: #000000; }
+        .link-discord i { color: #5865F2; }
+
+        /* Vollbild-Overlay für das Profilbild */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-picture" onclick="showOverlay()"></div>
+    <h1>CookieVR Webseite</h1>
+    <div class="links">
+        <a href="https://www.tiktok.com/@cookievr834" class="link link-tiktok">
+            <i class="fab fa-tiktok"></i> TikTok
+        </a>
+        <a href="https://discord.gg/q7wdM5G2nZ" class="link link-discord">
+            <i class="fab fa-discord"></i> Discord
+        </a>
+    </div>
+
+    <!-- Overlay für das große Profilbild -->
+    <div class="overlay" id="overlay">
+        <span class="close-btn" onclick="closeOverlay()">&times;</span>
+        <img src="https://cdn.gaminghund.de/cookievr.png" alt="Großes Profilbild">
+    </div>
+
+    <script>
+        function showOverlay() {
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeOverlay() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
