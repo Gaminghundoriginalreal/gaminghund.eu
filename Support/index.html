@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket-System</title>
+    <link rel="icon" href="https://cdn.gaminghund.de/bild.png" type="image/png">
+    <style>
+        /* Style.css in HTML integriert */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #005f73;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #0077b6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anmeldung / Registrierung</h1>
+        
+        <!-- Registrieren-Formular -->
+        <div id="register-form" style="display:none;">
+            <h3>Registrieren</h3>
+            <div class="form-group">
+                <label for="reg-email">Email:</label>
+                <input type="email" id="reg-email" placeholder="Email eingeben">
+            </div>
+            <div class="form-group">
+                <label for="reg-password">Passwort:</label>
+                <input type="password" id="reg-password" placeholder="Passwort eingeben">
+            </div>
+            <button onclick="register()">Registrieren</button>
+            <button onclick="showLoginForm()">Zurück zur Anmeldung</button>
+        </div>
+
+        <!-- Anmelden-Formular -->
+        <div id="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" placeholder="Email eingeben">
+            </div>
+            <div class="form-group">
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" placeholder="Passwort eingeben">
+            </div>
+            <button onclick="login()">Anmelden</button>
+            <button onclick="showRegisterForm()">Registrieren</button>
+        </div>
+
+        <!-- Dashboard für angemeldete Benutzer -->
+        <div id="dashboard" style="display:none;">
+            <h2>Dashboard - Ticket-System</h2>
+            <button onclick="showCreateTicket()">Ticket erstellen</button>
+            <button onclick="showAddSupporter()">Supporter hinzufügen</button>
+            <button onclick="logout()">Abmelden</button>
+
+            <div id="ticket-form" style="display:none;">
+                <h3>Neues Ticket erstellen</h3>
+                <div class="form-group">
+                    <label for="ticket-title">Titel:</label>
+                    <input type="text" id="ticket-title" placeholder="Ticket-Titel eingeben">
+                </div>
+                <div class="form-group">
+                    <label for="ticket-description">Beschreibung:</label>
+                    <textarea id="ticket-description" rows="4" placeholder="Ticket-Beschreibung eingeben"></textarea>
+                </div>
+                <button onclick="createTicket()">Ticket senden</button>
+            </div>
+            
+            <div id="add-supporter-form" style="display:none;">
+                <h3>Supporter hinzufügen</h3>
+                <div class="form-group">
+                    <label for="supporter-email">Supporter Email:</label>
+                    <input type="email" id="supporter-email" placeholder="Supporter Email eingeben">
+                </div>
+                <button onclick="addSupporter()">Supporter hinzufügen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Benutzer- und Admin-Daten
+        const users = {};
+        const adminEmail = "mail@gaminghund.de";
+        const adminPassword = "Fortnite2012!";
+        
+        // Registrieren-Funktion
+        function register() {
+            const email = document.getElementById("reg-email").value;
+            const password = document.getElementById("reg-password").value;
+
+            if (email && password) {
+                if (!users[email]) {
+                    users[email] = password;
+                    alert("Registrierung erfolgreich! Bitte melden Sie sich an.");
+                    showLoginForm();
+                } else {
+                    alert("Ein Benutzer mit dieser Email existiert bereits.");
+                }
+            } else {
+                alert("Bitte füllen Sie alle Felder aus.");
+            }
+        }
+        
+        // Anmelden-Funktion
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if ((email === adminEmail && password === adminPassword) || users[email] === password) {
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("register-form").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+                document.cookie = "loggedIn=true";
+            } else {
+                alert("Ungültige Anmeldedaten");
+            }
+        }
+        
+        function logout() {
+            document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("login-form").style.display = "block";
+        }
+
+        function showRegisterForm() {
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("register-form").style.display = "block";
+        }
+
+        function showLoginForm() {
+            document.getElementById("register-form").style.display = "none";
+            document.getElementById("login-form").style.display = "block";
+        }
+
+        function showCreateTicket() {
+            document.getElementById("ticket-form").style.display = "block";
+            document.getElementById("add-supporter-form").style.display = "none";
+        }
+
+        function showAddSupporter() {
+            document.getElementById("add-supporter-form").style.display = "block";
+            document.getElementById("ticket-form").style.display = "none";
+        }
+
+        function createTicket() {
+            const title = document.getElementById("ticket-title").value;
+            const description = document.getElementById("ticket-description").value;
+            if (title && description) {
+                alert(`Ticket "${title}" wurde erstellt.`);
+            } else {
+                alert("Bitte füllen Sie alle Felder aus.");
+            }
+        }
+
+        function addSupporter() {
+            const supporterEmail = document.getElementById("supporter-email").value;
+            if (supporterEmail) {
+                alert(`Supporter mit Email ${supporterEmail} wurde hinzugefügt.`);
+            } else {
+                alert("Bitte geben Sie eine gültige Email-Adresse ein.");
+            }
+        }
+    </script>
+</body>
+</html>

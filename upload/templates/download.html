@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datei herunterladen</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>{{ file.filename }}</h2>
+        <p>Beschreibung: {{ file.description }}</p>
+        <p>Bedienungsanleitung: {{ file.manual }}</p>
+        <a href="/uploads/{{ file_id }}">Datei herunterladen</a>
+    </div>
+</body>
+</html>

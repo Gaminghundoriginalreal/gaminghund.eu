@@ -1,0 +1,25 @@
+/* IP Banner Style */
+.ban-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #ffcccc;
+    color: #990000;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .ban-message h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .ban-message p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
